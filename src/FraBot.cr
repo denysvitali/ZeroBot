@@ -10,7 +10,7 @@ module FraBot
     exit
   end
 
-  puts token
+  puts "Starting FraBot"
 
   class FraBot < TelegramBot::Bot
 
