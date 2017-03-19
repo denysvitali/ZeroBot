@@ -1,0 +1,15 @@
+name: FraBot
+version: 0.1.0
+
+authors:
+  - Denys Vitali <denys.vitali@coelis.ch>
+
+targets:
+  FraBot:
+    main: src/FraBot.cr
+
+crystal: 0.20.5
+dependencies:
+  TelegramBot:
+    github: hangyas/TelegramBot
+license: MIT

@@ -1,0 +1,6 @@
+version: 1.0
+shards:
+  TelegramBot:
+    github: hangyas/TelegramBot
+    commit: 708c5a14014191aac23def40111aa55c65f47578
+
