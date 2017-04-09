@@ -25,8 +25,11 @@ module FraBot
 
         return unless from.is_a?(TelegramBot::User)
         return unless text.is_a?(String)
+        return if message.chat == nil
 
-        if /zero/i.match(text)
+        puts "#{message.chat.id} #{message.text}"
+
+        if /(\W| |^)zero(\W| |$)/i.match(text)
           reply(message, "We")
         end
 
@@ -43,7 +46,7 @@ module FraBot
         end
 
         if /^\/r\/[A-z0-9]+$/.match(text)
-          matches =  /^\/r\/(.*?)$/.match(text)
+          matches = /^\/r\/(.*?)$/.match(text)
           puts matches
           return unless matches
           HTTP::Client.get("https://www.reddit.com/r/#{matches[1]}.json") do |response|
@@ -53,12 +56,15 @@ module FraBot
             msg = "Posts of /r/#{matches[1]}\n\n"
             count = 0
             els.each do |el|
-              break unless count<5
+              break unless count < 5
+              if el["data"] == nil
+                next
+              end
               msg += el["data"]["title"].to_s
               msg += "\n"
-              msg += "https://reddit.com/#{el["data"]["permalink"].to_s}"
+              msg += "https://reddit.com#{el["data"]["permalink"]}"
               msg += "\n\n"
-              count+= 1
+              count += 1
             end
             reply(message, msg)
           end
@@ -70,5 +76,3 @@ module FraBot
   my_bot = FraBot.new token
   my_bot.polling
 end
-
-require "http/client"
